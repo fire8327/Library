@@ -8,7 +8,7 @@
             <div class="flex items-center gap-6">
                 <NuxtLink to="/" class="flex flex-col after:w-0 after:h-px after:bg-amber-500 after:transition-all after:duration-500 hover:after:w-full">Главная</NuxtLink>
                 <NuxtLink to="/" class="flex flex-col after:w-0 after:h-px after:bg-amber-500 after:transition-all after:duration-500 hover:after:w-full">Каталог</NuxtLink>
-                <NuxtLink to="/" class="flex flex-col after:w-0 after:h-px after:bg-amber-500 after:transition-all after:duration-500 hover:after:w-full">О нас</NuxtLink>
+                <NuxtLink to="/about" class="flex flex-col after:w-0 after:h-px after:bg-amber-500 after:transition-all after:duration-500 hover:after:w-full">О нас</NuxtLink>
                 <NuxtLink to="/auth" class="transition-all duration-500 hover:opacity-65 flex">
                     <Icon class="text-3xl text-amber-500" name="material-symbols:person"/>
                 </NuxtLink>
