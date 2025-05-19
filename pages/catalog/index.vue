@@ -11,7 +11,7 @@
                     <p class="text-xl font-medium font-mono">Наименование</p>
                     <p>Автор</p>
                     <p>Количество страниц: 123</p>
-                    <NuxtLink to="/" class="py-1 px-4 w-full transition-all duration-500 rounded-xl text-center bg-amber-500 text-white border border-amber-500 hover:text-amber-500 hover:bg-transparent">Подробнее</NuxtLink>
+                    <NuxtLink to="/catalog/book-1" class="py-1 px-4 w-full transition-all duration-500 rounded-xl text-center bg-amber-500 text-white border border-amber-500 hover:text-amber-500 hover:bg-transparent">Подробнее</NuxtLink>
                 </div>
             </div>
         </div>
