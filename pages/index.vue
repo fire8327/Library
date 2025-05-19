@@ -21,7 +21,7 @@
     </div>
     <div class="flex flex-col gap-6">
         <p class="mainHeading">📰 Библиотечные новости</p>
-        <NuxtLink to="/" class="flex flex-col gap-4 border-b border-gray-400 p-4 transition-all duration-500 hover:opacity-50" v-for="n in 6">
+        <NuxtLink to="/news/new-1" class="flex flex-col gap-4 border-b border-gray-400 p-4 transition-all duration-500 hover:opacity-50" v-for="n in 6">
             <p class="text-xl font-semibold font-mono">Название новости</p>
             <p class="text-sm text-gray-500 line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam placeat quasi a vero labore facilis voluptatem quae quisquam repudiandae. Asperiores quia mollitia optio est voluptatibus magni laborum ullam dolor aliquam!</p>
         </NuxtLink>
