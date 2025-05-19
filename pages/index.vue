@@ -25,9 +25,9 @@
             <p class="text-xl font-semibold font-mono">Название новости</p>
             <p class="text-sm text-gray-500 line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam placeat quasi a vero labore facilis voluptatem quae quisquam repudiandae. Asperiores quia mollitia optio est voluptatibus magni laborum ullam dolor aliquam!</p>
         </NuxtLink>
-        <button class="bg-amber-600 transition-all duration-500 w-fit text-white px-6 py-2 rounded-xl hover:opacity-60 self-end">
+        <NuxtLink to="/news" class="bg-amber-600 transition-all duration-500 w-fit text-white px-6 py-2 rounded-xl hover:opacity-60 self-end">
             Ещё новости
-        </button>
+        </NuxtLink>
     </div>
     <div class="bg-green-50 p-4 rounded-xl w-full text-center border border-green-200 shadow-sm flex flex-col items-center gap-4">
         <p class="mainHeading">🎲 Не знаете, что почитать?</p>
