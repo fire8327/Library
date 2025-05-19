@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-6 bg-white overflow-hidden rounded-xl p-4">
+    <div class="flex flex-col gap-6 bg-white overflow-hidden rounded-xl p-4 h-fit">
         <div class="flex flex-wrap gap-4 items-center text-sm text-gray-400">
             <span>15 октября 2023</span>
             <span>•</span>
