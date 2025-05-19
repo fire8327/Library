@@ -53,7 +53,7 @@ const authUser = async() => {
     if (!user) {
         userForm.value.login = ""
         isAuthDisabled.value = false
-        return showMessage("Неверный логин или профиль не подтверждён!", false)              
+        return showMessage("Неверный логин!", false)              
     }
 
     if (userForm.value.password !== user.password) {
