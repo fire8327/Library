@@ -21,10 +21,13 @@
     </div>
     <div class="flex flex-col gap-6">
         <p class="mainHeading">📰 Библиотечные новости</p>
-        <div class="flex flex-col gap-4 border-b border-gray-400 p-4" v-for="n in 6">
+        <NuxtLink to="/" class="flex flex-col gap-4 border-b border-gray-400 p-4 transition-all duration-500 hover:opacity-50" v-for="n in 6">
             <p class="text-xl font-semibold font-mono">Название новости</p>
             <p class="text-sm text-gray-500 line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam placeat quasi a vero labore facilis voluptatem quae quisquam repudiandae. Asperiores quia mollitia optio est voluptatibus magni laborum ullam dolor aliquam!</p>
-        </div>
+        </NuxtLink>
+        <button class="bg-amber-600 transition-all duration-500 w-fit text-white px-6 py-2 rounded-xl hover:opacity-60 self-end">
+            Ещё новости
+        </button>
     </div>
     <div class="bg-green-50 p-4 rounded-xl w-full text-center border border-green-200 shadow-sm flex flex-col items-center gap-4">
         <p class="mainHeading">🎲 Не знаете, что почитать?</p>
