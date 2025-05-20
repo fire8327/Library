@@ -18,9 +18,11 @@
             <div class="w-full h-px bg-gray-300"></div>
             <div class="flex items-center gap-4">
                 <p class="text-gray-500 font-medium">Поделиться:</p>
-                <button>
+                <a :href="`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(title)}`"
+                target="_blank"
+                rel="noopener noreferrer">
                     <Icon class="text-3xl" name="logos:telegram"/>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -67,6 +69,11 @@ const goBack = () => {
 }
 
 
+/* поделиться */
+const currentUrl = `https://delicate-starship-0a7654.netlify.app${route.fullPath}`
+const title = ref("")
+
+
 /* получение данных */
 const article = ref(null)
 const loadArticle = async() => {
@@ -77,6 +84,7 @@ const loadArticle = async() => {
     .single()
 
     article.value = data || null
+    title.value = data?.title || ""
 }
 
 
