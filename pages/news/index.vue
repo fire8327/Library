@@ -2,22 +2,21 @@
     <div class="flex flex-col gap-6">
         <p class="mainHeading">📰 Библиотечные новости</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <NuxtLink to="/news/new-1" class="flex flex-col gap-4 border border-gray-200 bg-white rounded-xl p-4 transition-all duration-500 hover:shadow-md hover:border-amber-300" v-for="n in 6">
+            <NuxtLink :to="`/news/new-${article.id}`" v-for="article in news" :key="article.id" class="flex flex-col gap-4 border border-gray-200 bg-white rounded-xl p-4 transition-all duration-500 hover:shadow-md hover:border-amber-300">
                 <div class="flex items-center gap-2 text-sm text-gray-400">
-                    <span>15 октября 2023</span>
+                    <span>{{ new Date(article.date).toLocaleDateString() }}</span>
                     <span>•</span>
-                    <span>3 мин чтения</span>
+                    <span>{{ article.reading_time }}</span>
                 </div>
-                <p class="text-xl font-semibold font-mono">Открытие нового детского зала</p>
-                <p class="text-gray-600 line-clamp-2">В центральном филиале появилось современное пространство для юных читателей с интерактивными книгами и зоной творчества.</p>
+                <p class="text-xl font-semibold font-mono">{{ article.title }}</p>
+                <p class="text-gray-600 line-clamp-2 mt-auto">{{ article.content }}</p>
                 <div class="flex items-center gap-2 flex-wrap">
-                    <p class="py-1 px-4 bg-gray-100 text-gray-500 rounded-full text-sm">События</p>
-                    <p class="py-1 px-4 bg-gray-100 text-gray-500 rounded-full text-sm">Дети</p>
+                    <p class="py-1 px-4 bg-gray-100 text-gray-500 rounded-full text-sm" v-for="tag in article.tags">{{ tag }}</p>
                 </div>
             </NuxtLink>
         </div>
     </div>
-    <div class="flex justify-center gap-2">
+   <!--  <div class="flex justify-center gap-2">
         <button
             class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100">
             &lt;
@@ -33,9 +32,36 @@
             class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100">
             &gt;
         </button>
-    </div>
+    </div> -->
 </template>
 
 <script setup>
+import NewId from './new-[id].vue'
 
+/* название и язык страницы */
+useSeoMeta({
+    title: 'Новости',
+    lang: 'ru'
+})
+
+
+/* подключение БД */
+const supabase = useSupabaseClient()
+
+
+/* получение данных */
+const news = ref([])
+const loadNews = async() => {
+    const { data, error } = await supabase
+    .from('news')
+    .select()
+
+    news.value = data || []
+}
+
+
+/* первоначальная загрузка */
+onMounted(() => {
+    loadNews()
+})
 </script>
