@@ -21,7 +21,7 @@
     </div>
     <div class="flex flex-col gap-6">
         <p class="mainHeading">📰 Библиотечные новости</p>
-        <NuxtLink :to="`/news/new-${ article.id }`" class="flex flex-col gap-4 border-b border-gray-400 p-4 transition-all duration-500 hover:opacity-50" v-for="article in news">
+        <NuxtLink :to="`/news/new-${ article.id }`" class="flex flex-col gap-4 border-b border-gray-400 p-4 transition-all duration-500 hover:opacity-50" v-for="article in news.slice(0,6)">
             <p class="text-xl font-semibold font-mono">{{ article.title }}</p>
             <p class="text-sm text-gray-500 line-clamp-2">{{ article.content }}</p>
         </NuxtLink>
@@ -31,8 +31,8 @@
     </div>
     <div class="bg-green-50 p-4 rounded-xl w-full text-center border border-green-200 shadow-sm flex flex-col items-center gap-4">
         <p class="mainHeading">🎲 Не знаете, что почитать?</p>
-        <p>Позвольте нам выбрать книгу для вас</p>
-        <button class="bg-green-600 transition-all duration-500 w-fit text-white px-6 py-2 rounded-xl hover:opacity-60">
+        <p>Позвольте нам выбрать новость для вас</p> <!-- или книгу -->
+        <button @click="goToRandomArticle" class="bg-green-600 transition-all duration-500 w-fit text-white px-6 py-2 rounded-xl hover:opacity-60">
             Крутить барабан
         </button>
     </div>
@@ -47,8 +47,19 @@ useSeoMeta({
 })
 
 
-/* подключение БД */
+/* подключение БД и роутера */
 const supabase = useSupabaseClient()
+const router = useRouter()
+
+
+/* случайная новость */
+const randomId = ref(null)
+const newsLength = ref(null)
+
+const goToRandomArticle = () => {
+    randomId.value = Math.floor(Math.random() * (newsLength.value - 1) + 1)
+    router.push(`/news/new-${randomId.value}`)
+}
 
 
 /* получение данных */
@@ -57,9 +68,11 @@ const loadNews = async() => {
     const { data, error } = await supabase
     .from('news')
     .select()
-    .limit(6)
 
-    news.value = data || []
+    if(data) {
+        news.value = data
+        newsLength.value = data.length
+    }
 }
 
 
