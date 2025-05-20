@@ -36,8 +36,6 @@
 </template>
 
 <script setup>
-import NewId from './new-[id].vue'
-
 /* название и язык страницы */
 useSeoMeta({
     title: 'Новости',

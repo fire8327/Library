@@ -21,9 +21,9 @@
     </div>
     <div class="flex flex-col gap-6">
         <p class="mainHeading">📰 Библиотечные новости</p>
-        <NuxtLink to="/news/new-1" class="flex flex-col gap-4 border-b border-gray-400 p-4 transition-all duration-500 hover:opacity-50" v-for="n in 6">
-            <p class="text-xl font-semibold font-mono">Название новости</p>
-            <p class="text-sm text-gray-500 line-clamp-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam placeat quasi a vero labore facilis voluptatem quae quisquam repudiandae. Asperiores quia mollitia optio est voluptatibus magni laborum ullam dolor aliquam!</p>
+        <NuxtLink :to="`/news/new-${ article.id }`" class="flex flex-col gap-4 border-b border-gray-400 p-4 transition-all duration-500 hover:opacity-50" v-for="article in news">
+            <p class="text-xl font-semibold font-mono">{{ article.title }}</p>
+            <p class="text-sm text-gray-500 line-clamp-2">{{ article.content }}</p>
         </NuxtLink>
         <NuxtLink to="/news" class="bg-amber-600 transition-all duration-500 w-fit text-white px-6 py-2 rounded-xl hover:opacity-60 self-end">
             Ещё новости
@@ -44,5 +44,27 @@
 useSeoMeta({
     title: 'Главная',
     lang: 'ru'
+})
+
+
+/* подключение БД */
+const supabase = useSupabaseClient()
+
+
+/* получение данных */
+const news = ref([])
+const loadNews = async() => {
+    const { data, error } = await supabase
+    .from('news')
+    .select()
+    .limit(6)
+
+    news.value = data || []
+}
+
+
+/* первоначальная загрузка */
+onMounted(() => {
+    loadNews()
 })
 </script>
