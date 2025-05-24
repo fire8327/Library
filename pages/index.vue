@@ -8,7 +8,7 @@
         </FormKit>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <NuxtLink to="/" class="bg-white transition-all duration-500 rounded-xl p-4 border border-gray-200 shadow-[0px_0px_13px_-7px_black] hover:shadow-none flex flex-col gap-2">
+        <NuxtLink to="/catalog" class="bg-white transition-all duration-500 rounded-xl p-4 border border-gray-200 shadow-[0px_0px_13px_-7px_black] hover:shadow-none flex flex-col gap-2">
             <p class="text-3xl">🔍</p>
             <p class="text-xl font-mono font-medium">Каталог</p>
             <p class="text-sm text-gray-500">Все книги в одном месте</p>
