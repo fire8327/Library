@@ -17,6 +17,27 @@
         </FormKit>
     </div>
     <div class="flex flex-col gap-6">
+        <p class="mainHeading">Забронированные книги</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" v-if="bookedBooks && bookedBooks.length > 0">
+            <div class="flex flex-col gap-4 rounded-xl p-4 shadow-lg bg-white" v-for="book in bookedBooks">
+                <div class="flex items-center justify-between">
+                    <NuxtLink :to="`/catalog/book-${book.books.id}`" class="transition-all duration-500 hover:opacity-50">
+                        <Icon class="text-3xl text-amber-500" name="material-symbols:eye-tracking-rounded"/>
+                    </NuxtLink>
+                    <button class="transition-all duration-500 hover:opacity-50">
+                        <Icon class="text-3xl text-red-500" name="material-symbols:delete-outline-rounded"/>
+                    </button>
+                </div>
+                <img :src="getPublicFileUrl(book.books.image)" alt="" class="rounded-xl w-full aspect-[10/11] object-cover object-top">
+                <p class="mt-auto"><span class="font-semibold font-mono">Наименование:</span> {{ book.books.title }}</p>
+                <p class="mt-auto"><span class="font-semibold font-mono">Язык:</span> {{ book.books.language }}</p>
+                <p><span class="font-semibold font-mono">Забронировано до:</span> {{ new Date(book.expires_at).toLocaleDateString() }}</p>
+                <p class="self-end"><span class="rounded-full w-8 h-8 text-white bg-[#131313] p-2 flex items-center justify-center text-sm">{{ book.books.age_rating }}</span></p>
+            </div>
+        </div>
+        <p v-else class="text-xl text-center font-semibold font-mono">Забронированных книг нет</p>
+    </div>
+    <div class="flex flex-col gap-6">
         <p class="mainHeading">Выход из аккаунта</p>
         <button @click="logout" class="px-4 py-2 border border-amber-500 bg-amber-500 text-white rounded-full w-[160px] text-center transition-all duration-500 hover:text-amber-500 hover:bg-transparent">Выйти</button>
     </div>
@@ -108,8 +129,37 @@ const handleSave = () => {
 }
 
 
+/* забронированные книги */
+const bookedBooks = ref([])
+const loadBookedBooks = async() => {
+    const { data, error } = await supabase
+    .from('reservations')
+    .select('*, books(*)')
+    .eq('user_id', userId)
+
+    if (error) throw error
+
+    if (data) bookedBooks.value = data 
+}
+
+
+/* получение url */
+const getPublicFileUrl = (filePath, bucket = 'files/covers') => {
+    if (!filePath) return ''
+  
+    // Получаем публичный URL из Supabase Storage
+    const { data } = supabase
+    .storage
+    .from(bucket)
+    .getPublicUrl(filePath)
+  
+    return data.publicUrl
+}
+
+
 /* первоначальная загрузка */
 onMounted(() => {
     loadProfileData()
+    loadBookedBooks()
 })
 </script>

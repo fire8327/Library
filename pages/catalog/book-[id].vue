@@ -106,7 +106,7 @@ const isReserving = ref(false)
 
 /* доступность книги */
 const isAvailable = computed(() => {
-  return book.value?.status === 'available' && book.value?.quantity > 0
+  return book.value?.quantity > 0
 })
 
 
@@ -138,8 +138,7 @@ const handleReservation = async() => {
         const { error: updateError } = await supabase
         .from('books')
         .update({ 
-            quantity: book.value?.quantity - 1,
-            status: book.value?.quantity - 1 === 0 ? 'unavailable' : 'available'
+            quantity: book.value?.quantity - 1
         })
         .eq('id', route.params.id)
 
