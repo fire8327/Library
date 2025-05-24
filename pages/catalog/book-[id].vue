@@ -1,7 +1,7 @@
 <template>
     <div class="flex max-lg:flex-col gap-6 w-full">
         <div class="flex flex-col gap-6 w-full lg:w-1/2 bg-white p-6 shadow-md rounded-xl border border-gray-200 h-fit">
-            <img src="/images/about/main.jpg" alt="" class="w-full rounded-lg shadow-lg">
+            <img src="/images/about/main.jpg" alt="" class="w-full aspect-[7/8] object-cover rounded-lg shadow-lg">
             <div class="flex items-center gap-2">
                 <div class="w-3 h-3 rounded-full animate-pulse" :class="isAvailable ? 'bg-green-500' : 'bg-red-500'"></div>
                 <p class="font-medium">{{ isAvailable ? 'Доступно' : 'Недоступно' }} <span v-if="book?.quantity >= 1">{{ book?.quantity }} шт.</span></p>
@@ -57,7 +57,7 @@
         <p class="mainHeading">Ещё книги</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <NuxtLink :to="`/catalog/book-${book.id}`" class="flex flex-col rounded-xl overflow-hidden bg-white shadow-lg transition-all duration-500 border hover:border-amber-500 p-4 gap-4" v-for="book in randomBooks">
-                <img src="/images/about/main.jpg" alt="" class="w-full aspect-video object-cover rounded-lg">
+                <img src="/images/about/main.jpg" alt="" class="w-full aspect-[7/8] object-cover rounded-lg">
                 <span class="text-xl font-medium font-mono">{{ book.title }}</span>
                 <span class="mt-auto">{{ book.author }}</span>
             </NuxtLink>
