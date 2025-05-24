@@ -25,13 +25,14 @@
                         <Icon class="text-3xl text-amber-500" name="material-symbols:eye-tracking-rounded"/>
                     </NuxtLink>
                     <button class="transition-all duration-500 hover:opacity-50">
-                        <Icon class="text-3xl text-red-500" name="material-symbols:delete-outline-rounded"/>
+                        <Icon class="text-3xl text-red-500" name="material-symbols:close-rounded"/>
                     </button>
                 </div>
                 <img :src="getPublicFileUrl(book.books.image)" alt="" class="rounded-xl w-full aspect-[10/11] object-cover object-top">
                 <p class="mt-auto"><span class="font-semibold font-mono">Наименование:</span> {{ book.books.title }}</p>
                 <p class="mt-auto"><span class="font-semibold font-mono">Язык:</span> {{ book.books.language }}</p>
                 <p><span class="font-semibold font-mono">Забронировано до:</span> {{ new Date(book.expires_at).toLocaleDateString() }}</p>
+                <p><span class="font-semibold font-mono">Статус:</span> {{ bookStatus(book.status) }}</p>
                 <p class="self-end"><span class="rounded-full w-8 h-8 text-white bg-[#131313] p-2 flex items-center justify-center text-sm">{{ book.books.age_rating }}</span></p>
             </div>
         </div>
@@ -155,6 +156,24 @@ const getPublicFileUrl = (filePath, bucket = 'files/covers') => {
   
     return data.publicUrl
 }
+
+
+/* статус книги */
+const bookStatus = ((status) => {
+    switch (status) {
+        case "reserved":
+            return "Забронирована вами"
+        case "canceled":
+            return "Бронь отменена"
+        case "completed":
+            return "Получена"
+        case "overdue":
+            return "Просрочена"
+
+        default:
+            return "Статус не определён"
+    }
+})
 
 
 /* первоначальная загрузка */
