@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="flex flex-col rounded-xl overflow-hidden bg-white shadow-lg" v-for="book in books">
                 <div class="relative w-full">
-                    <img :src="getPublicFileUrl(book.image)" alt="" class="w-full aspect-[7/8] object-cover">
+                    <img :src="getPublicFileUrl(book.image)" alt="" class="w-full aspect-[7/8] object-cover object-top">
                     <p class="absolute top-4 right-4 rounded-xl bg-sky-500 text-white py-1 px-4 text-sm font-medium">{{ book.genre[0] }}</p>
                 </div>
                 <div class="flex flex-col gap-4 p-4 grow">
@@ -43,15 +43,15 @@ const loadBooks = async() => {
 
 /* получение url */
 const getPublicFileUrl = (filePath, bucket = 'files/covers') => {
-  if (!filePath) return ''
-  
-  // Получаем публичный URL из Supabase Storage
-  const { data } = supabase
+    if (!filePath) return ''
+
+    // Получаем публичный URL из Supabase Storage
+    const { data } = supabase
     .storage
     .from(bucket)
     .getPublicUrl(filePath)
-  
-  return data.publicUrl
+
+    return data.publicUrl
 }
 
 
