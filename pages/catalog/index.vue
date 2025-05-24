@@ -42,15 +42,16 @@ const loadBooks = async() => {
 
 
 /* получение url */
-const getPublicFileUrl = async(filePath) => {
-    const { data } = await supabase
+const getPublicFileUrl = (filePath, bucket = 'files/covers') => {
+  if (!filePath) return ''
+  
+  // Получаем публичный URL из Supabase Storage
+  const { data } = supabase
     .storage
-    .from('files')
-    .getPublicUrl(`covers/${filePath}`)
-    
-    if(data) {
-        return data?.publicUrl
-    }
+    .from(bucket)
+    .getPublicUrl(filePath)
+  
+  return data.publicUrl
 }
 
 
