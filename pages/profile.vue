@@ -24,7 +24,7 @@
                     <NuxtLink :to="`/catalog/book-${book.books.id}`" class="transition-all duration-500 hover:opacity-50">
                         <Icon class="text-3xl text-amber-500" name="material-symbols:eye-tracking-rounded"/>
                     </NuxtLink>
-                    <button class="transition-all duration-500 hover:opacity-50">
+                    <button @click="cancelBooking(book.id)" class="transition-all duration-500 hover:opacity-50">
                         <Icon class="text-3xl text-red-500" name="material-symbols:close-rounded"/>
                     </button>
                 </div>
@@ -137,6 +137,7 @@ const loadBookedBooks = async() => {
     .from('reservations')
     .select('*, books(*)')
     .eq('user_id', userId)
+    .order('status')
 
     if (error) throw error
 
@@ -174,6 +175,23 @@ const bookStatus = ((status) => {
             return "Статус не определён"
     }
 })
+
+
+/* отмена бронирование */
+const cancelBooking = async(bookId) => {
+    const { data, error } = await supabase
+    .from('reservations')
+    .update({ status: 'canceled' })
+    .eq('id', bookId)
+    .select()
+
+    if(data) {
+        showMessage('Бронирование отменено!', true)
+        loadBookedBooks()
+    } else {
+        showMessage('Произошла ошибка!', false)
+    }
+}
 
 
 /* первоначальная загрузка */
