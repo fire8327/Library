@@ -6,12 +6,12 @@
                 <div class="flex items-center gap-2 text-sm text-gray-400">
                     <span>{{ new Date(article.date).toLocaleDateString() }}</span>
                     <span>•</span>
-                    <span>{{ article.reading_time }}</span>
+                    <span>{{ article.reading_time }} мин чтения</span>
                 </div>
                 <p class="text-xl font-semibold font-mono">{{ article.title }}</p>
                 <p class="text-gray-600 line-clamp-2 mt-auto">{{ article.content }}</p>
-                <div class="flex items-center gap-2 flex-wrap">
-                    <p class="py-1 px-4 bg-gray-100 text-gray-500 rounded-full text-sm" v-for="tag in article.tags">{{ tag }}</p>
+                <div class="flex items-center gap-2 flex-wrap uppercase">
+                    <p class="py-1 px-4 bg-gray-100 text-gray-500 rounded-full text-xs" v-for="tag in article.tags">{{ tag }}</p>
                 </div>
             </NuxtLink>
         </div>
