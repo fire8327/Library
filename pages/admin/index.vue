@@ -23,7 +23,7 @@
     </div>
     <div class="flex flex-col gap-6">
         <p class="mainHeading">Управление новостями</p>
-        <div class="grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-4 gap-6" v-if="news && news.length > 0">
             <div class="flex flex-col gap-4 rounded-xl p-4 shadow-lg bg-white" v-for="article in news">
                 <div class="flex items-center justify-between">
                     <NuxtLink :to="`/news/new-${article.id}`" class="transition-all duration-500 hover:opacity-50">
@@ -38,6 +38,26 @@
                 <p><span class="font-semibold font-mono">Дата:</span> {{ new Date(article.date).toLocaleDateString() }}</p>
             </div>
         </div>
+        <p class="text-center text-xl font-semibold font-mono" v-else>Новостей нет</p>
+    </div>
+    <div class="flex flex-col gap-6">
+        <p class="mainHeading">Управление книгами</p>
+        <div class="grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-4 gap-6" v-if="books && books.length > 0">
+            <div class="flex flex-col gap-4 rounded-xl p-4 shadow-lg bg-white" v-for="book in books">
+                <div class="flex items-center justify-between">
+                    <NuxtLink :to="`/catalog/book-${book.id}`" class="transition-all duration-500 hover:opacity-50">
+                        <Icon class="text-3xl text-amber-500" name="material-symbols:eye-tracking-rounded"/>
+                    </NuxtLink>
+                    <button @click="deleteEntity('books', book.id)" class="transition-all duration-500 hover:opacity-50">
+                        <Icon class="text-3xl text-red-500" name="material-symbols:delete-outline-rounded"/>
+                    </button>
+                </div>
+                <img :src="getPublicFileUrl(book.image)" alt="" class="w-full aspect-[7/8] object-cover object-top rounded-lg">
+                <p class="mt-auto"><span class="font-semibold font-mono">Наименовани :</span> {{ book.title }}</p>
+                <p class="mt-auto line-clamp-2"><span class="font-semibold font-mono">Описание:</span> {{ book.description }}</p>
+            </div>
+        </div>
+        <p class="text-center text-xl font-semibold font-mono" v-else>Книг нет</p>
     </div>
 </template>
 
@@ -137,7 +157,34 @@ const loadNews = async() => {
 }
 
 
-/* удаление новости */
+/* получение книг */
+const books = ref([])
+const loadBooks = async() => {
+    const { data, error } = await supabase
+    .from('books')
+    .select()
+
+    if (error) throw error
+
+    if (data) books.value = data 
+}
+
+
+/* получение url */
+const getPublicFileUrl = (filePath, bucket = 'files/covers') => {
+    if (!filePath) return ''
+
+    // Получаем публичный URL из Supabase Storage
+    const { data } = supabase
+    .storage
+    .from(bucket)
+    .getPublicUrl(filePath)
+
+    return data.publicUrl
+}
+
+
+/* удаление сущности */
 const deleteEntity = async(table, entityId) => {
     const { error } = await supabase
     .from(table)
@@ -147,15 +194,16 @@ const deleteEntity = async(table, entityId) => {
     if(!error) {
         showMessage('Успешное удаление!', true)
         loadNews()
+        loadBooks()
     } else {
         showMessage('Произошла ошибка!', false)
     }
           
 }
 
-
 /* первоначальная загрузка */
 onMounted(() => {
     loadNews()
+    loadBooks()
 })
 </script>
