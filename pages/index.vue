@@ -3,7 +3,7 @@
         <p class="text-3xl font-semibold font-mono">Добро пожаловать в цифровую библиотеку!</p>
         <p class="text-xl">Откройте новую любимую книгу среди бесконечного мира историй, собранных в нашей библиотеке.</p>
         <FormKit @submit="handleSearch" type="form" :actions="false" messages-class="hidden" form-class="flex gap-2 items-start">
-            <FormKit v-model="searchQuery" validation="required" messages-class="text-[#E9556D] font-mono" type="text" placeholder="Название, автор, жанр" name="Поиск" outer-class="text-[#131313] w-full" input-class="focus:outline-none px-4 py-1.5 bg-white rounded-xl border border-transparent w-full transition-all duration-500 focus:border-amber-500 shadow-md"/>
+            <FormKit v-model="searchQuery" validation="required" messages-class="text-[#E9556D] font-mono" type="text" placeholder="Название, автор" name="Поиск" outer-class="text-[#131313] w-full" input-class="focus:outline-none px-4 py-1.5 bg-white rounded-xl border border-transparent w-full transition-all duration-500 focus:border-amber-500 shadow-md"/>
             <button type="submit" class="cursor-pointer py-1.5 px-4 rounded-xl bg-white w-fit transition-all duration-500 hover:opacity-60 text-[#131313] shadow-[0px_0px_13px_-7px_black]">Искать</button>
         </FormKit>
     </div>
