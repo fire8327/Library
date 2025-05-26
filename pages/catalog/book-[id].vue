@@ -6,13 +6,13 @@
                 <div class="w-3 h-3 rounded-full animate-pulse" :class="isAvailable ? 'bg-green-500' : 'bg-red-500'"></div>
                 <p class="font-medium">{{ isAvailable ? 'Доступно' : 'Недоступно' }} <span v-if="book?.quantity >= 1">{{ book?.quantity }} шт.</span></p>
             </div>
-            <button @click="handleReservation" :disabled="!isAvailable || isReserving" :class="{'opacity-50 cursor-not-allowed' : !isAvailable || isReserving}" class="w-full bg-amber-500 hover:opacity-60 text-white py-1.5 px-4 rounded-xl transition-all duration-500 font-medium">
+            <button v-if="authenticated && role === 'user'" @click="handleReservation" :disabled="!isAvailable || isReserving" :class="{'opacity-50 cursor-not-allowed' : !isAvailable || isReserving}" class="w-full bg-amber-500 hover:opacity-60 text-white py-1.5 px-4 rounded-xl transition-all duration-500 font-medium">
                 {{ reservationButtonText }}
             </button>
+            <p v-else class="text-sm text-gray-500">*для бронирования войдите в аккаунт</p>
         </div>
         <div class="flex flex-col gap-6 w-full lg:w-1/2 bg-white p-6 shadow-md rounded-xl border border-gray-200 h-fit">
-            <button v-if="authenticated && role === 'user'" @click="goBack" class="w-fit self-end bg-amber-500 hover:opacity-60 text-white py-1.5 px-4 rounded-xl transition-all duration-500 font-medium">Назад</button>
-            <p v-else class="text-sm text-gray-500">*для бронирования войдите в аккаунт</p>
+            <button @click="goBack" class="w-fit self-end bg-amber-500 hover:opacity-60 text-white py-1.5 px-4 rounded-xl transition-all duration-500 font-medium">Назад</button>
             <p class="text-3xl font-semibold font-mono">{{ book?.title }}</p>
             <p class="text-xl text-gray-500">{{ book?.author }}</p>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
