@@ -1,6 +1,9 @@
 <template>
     <div class="flex flex-col gap-6">
-        <p class="mainHeading">Каталог</p>
+        <div class="flex lg:items-center lg:justify-between max-lg:flex-col w-full gap-4">
+            <p class="mainHeading">Каталог</p>
+            <button v-if="searchQuery && searchQuery.length > 0" @click="clearSearchQuery" type="button" class="px-4 py-1.5 border border-amber-500 bg-amber-500 text-white rounded-full w-fit text-center transition-all duration-500 hover:text-amber-500 hover:bg-transparent">Показать всё</button>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="flex flex-col rounded-xl overflow-hidden bg-white shadow-lg" v-for="book in books">
                 <div class="relative w-full">
@@ -26,18 +29,29 @@ useSeoMeta({
 })
 
 
-/* подключение БД */
+/* подключение БД и хранилища */
 const supabase = useSupabaseClient()
+const { searchQuery } = storeToRefs(useSearchStore())
 
 
 /* получение данных */
 const books = ref([])
 const loadBooks = async() => {
-    const { data, error } = await supabase
-    .from('books')
-    .select()
+    let query = supabase.from('books').select()
+
+    if(searchQuery.value) {
+        query = query.or(`title.ilike.%${searchQuery.value}%,author.ilike.%${searchQuery.value}%`)
+    }
+
+    const { data, error } = await query
 
     books.value = data || []
+}
+
+// отмена поиска
+const clearSearchQuery = () => {
+    searchQuery.value = ''
+    loadBooks()
 }
 
 
