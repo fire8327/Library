@@ -315,6 +315,28 @@ const getPublicFileUrl = (filePath, bucket = 'files/covers') => {
 
 /* удаление сущности */
 const deleteEntity = async(table, entityId) => {
+    if(table === 'books') {
+        let imageName = ""
+
+        const { data, error } = await supabase
+        .from("books")
+        .select("image")
+        .eq('id', entityId)
+        .single()
+
+        imageName = data.image || ""
+
+        if (imageName) {
+            const { error: storageError } = await supabase
+            .storage
+            .from('files')
+            .remove([`covers/${imageName}`])
+
+            if (storageError) return showMessage('Произошла ошибка при удалении изображения!', false)
+        }
+    }
+
+
     const { error } = await supabase
     .from(table)
     .delete()
@@ -325,7 +347,7 @@ const deleteEntity = async(table, entityId) => {
         loadNews()
         loadBooks()
     } else {
-        showMessage('Произошла ошибка!', false)
+        showMessage('Произошла ошибка при удалении!', false)
     }
           
 }
