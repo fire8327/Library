@@ -7,7 +7,7 @@
             <button type="submit" class="cursor-pointer py-1.5 px-4 rounded-xl bg-white w-fit transition-all duration-500 hover:opacity-60 text-[#131313] shadow-[0px_0px_13px_-7px_black]">Искать</button>
         </FormKit>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <NuxtLink to="/catalog" class="bg-white transition-all duration-500 rounded-xl p-4 border border-gray-200 shadow-[0px_0px_13px_-7px_black] hover:shadow-none flex flex-col gap-2">
             <p class="text-3xl">🔍</p>
             <p class="text-xl font-mono font-medium">Каталог</p>
@@ -17,6 +17,11 @@
             <p class="text-3xl">👤</p>
             <p class="text-xl font-mono font-medium">Профиль</p>
             <p class="text-sm text-gray-500">Ваши книги и настройки</p>
+        </NuxtLink>
+        <NuxtLink to="/about" class="bg-white transition-all duration-500 rounded-xl p-4 border border-gray-200 shadow-[0px_0px_13px_-7px_black] hover:shadow-none flex flex-col gap-2">
+            <p class="text-3xl">ℹ️</p>
+            <p class="text-xl font-mono font-medium">О нас</p>
+            <p class="text-sm text-gray-500">Информация о библиотеке</p>
         </NuxtLink>
     </div>
     <div class="flex flex-col gap-6">
